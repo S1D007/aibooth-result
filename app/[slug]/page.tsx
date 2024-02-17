@@ -20,7 +20,17 @@ export default function Slug({ params }: { params: { slug: string } }) {
 
   const downloadImage = async () => {
     // open in data url in new tab
-    window.open(data, "_blank");
+    // window.open(data, "_blank");
+    const response = await axios.get(data, {
+      responseType: "blob",
+    });
+    const blob = new Blob([response.data], { type: "image/jpeg" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = data;
+    link.click();
+    URL.revokeObjectURL(url);
   }
 
   // console.log(data.data)

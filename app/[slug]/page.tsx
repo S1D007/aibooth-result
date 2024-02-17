@@ -21,16 +21,24 @@ export default function Slug({ params }: { params: { slug: string } }) {
   const downloadImage = async () => {
     // open in data url in new tab
     // window.open(data, "_blank");
-    const response = await axios.get(data, {
-      responseType: "blob",
-    });
-    const blob = new Blob([response.data], { type: "image/jpeg" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = data;
-    link.click();
-    URL.revokeObjectURL(url);
+    // console.log(e.target.href);
+    fetch(data, {
+      method: "GET",
+      headers: {}
+    })
+      .then(response => {
+        response.arrayBuffer().then(function(buffer) {
+          const url = window.URL.createObjectURL(new Blob([buffer]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "image.png"); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   // console.log(data.data)

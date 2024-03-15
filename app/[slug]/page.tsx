@@ -7,11 +7,11 @@ export default function Slug({ params }: { params: { slug: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(
-        `https://roop.gokapturehub.com/check/${params.slug}`
+        `https://github.com/S1D007/aibooth-result/check/${params.slug}`
       );
       setData(result.data.result.replace("https://gkh-images.s3.amazonaws.com/", "https://d3n1vk7xba6ap0.cloudfront.net/"));
     };
-    fetchData();  
+    fetchData();
   }, []);
 
   if (!data) {
